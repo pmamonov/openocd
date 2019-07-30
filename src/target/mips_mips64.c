@@ -295,7 +295,9 @@ static int mips_mips64_set_sdbbp(struct target *target, struct breakpoint *bp)
 	uint32_t verify;
 	int retval;
 
-	retval = target_read_u32(target, bp->address, (uint32_t *)bp->orig_instr);
+	retval = target_read_memory(target,
+				    bp->address, bp->length, 1,
+				    bp->orig_instr);
 	if (retval != ERROR_OK)
 		return retval;
 
@@ -324,7 +326,9 @@ static int mips_mips16_set_sdbbp(struct target *target, struct breakpoint *bp)
 	uint16_t verify;
 	int retval;
 
-	retval = target_read_u16(target, bp->address, (uint16_t *)bp->orig_instr);
+	retval = target_read_memory(target,
+				    bp->address, bp->length, 1,
+				    bp->orig_instr);
 	if (retval != ERROR_OK)
 		return retval;
 
